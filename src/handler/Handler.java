@@ -9,6 +9,7 @@ public class Handler
 		GUI.main(null);
 	}
 	
+	//start a new download
 	public static void newDownload()
 	{
 		newDownload.main(null);
