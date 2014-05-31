@@ -29,10 +29,6 @@ public class Client implements Runnable
 	private int fromOff = -1;
 	private String md5sum = "";
 
-
-	//public static DownloadProgress dp;
-
-
 	/**
 	 * Constructor for Threads
 	 * 
