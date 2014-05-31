@@ -1,0 +1,76 @@
+
+Objectives: Implement Download manager like application using TCP sockets. 
+
+Project introduction:
+ A download manager is a computer program dedicated to the task of downloading. The typical download manager at a minimum provides means to recover from errors without losing the work already completed, and can optionally split the file to be downloaded into 2 or more segments, which are then moved in parallel, potentially making the process faster within the limits of the available bandwidth.
+Typical (real world) download managers will work on HTTP, which is a application layer protocol. Since you were not trained on HTTP requests and responses, you will limit your implementation to TCP level protocols. To simulate real world web servers, in this project you will have to create TCP iterative server and fill it with files such that client program can download. 
+
+Check list / Requirements: Following are enumerated requirements (subdivided for modularity):
+Client interface to input file/multiple files for downloading.
+Program uses TCP iterative server for downloading
+Client program handles server requests and responses.
+Client program displays download status for a file transfer.
+Establish multiple connections to download a file.
+Default download directory, location where the files will be downloaded.
+Managing temporary files, while download in progress.
+Simultaneously download multiple files.
+Display status of all download in progress files.
+Create file with zeros/junk until file size is reached.
+Display status and file transfer complete status.
+
+Project description: 
+Implement this project using TCP iterative server both at server program and at client program. Students are free to implement this project in any programming language of their choice (like C / C++ / Java). User interface can be character user interface, if you are using Java you are permitted to develop Graphical user interface. Do not implement the downloads for HTTP web servers. This is an individual project.
+Create a TCP iterative server program, that can handle multiple client requests
+Client program MUST establish a TCP connection with server listening on dedicated port number.
+Concurrency could be implemented either through processes or through threads
+When server accepts the connection, client MAY request server for list of all files that are available in server directory
+Server recognizes client requests through constants / numbers.
+There could be constants denoting request for file download. Like wise for file size request, download request, connection close request etc.
+User on client program SHOULD be given option to change/set a default download directory.
+Client program MUST have interfaces for the user to input one file /multiple files.
+User MAY limit number of downloads (files) client program can handle at a given time.
+For each file download, client program MUST maintain download status.
+You may want to create either log file / display on screen % of downloaded information. For example: depending on file size program shall display 10% complete, 20% complete etc.
+Server has list of all file names for download, in your client program user MAY choose to have new file name (destination file name).
+When a file transfer is initiated your program creates a temporary file on the download directory, this file is accessible to only your program. The temporary file MAY be renamed (<I>atleast a new extension) such that users do not use it while file transfer is in progress. Your program MUST keep track of temporary file names on the download directory.
+One of the features for your program is download acceleration.
+To make the download faster client program SHOULD initiate multiple connections.
+Users MAY choose to provide number of connections required to download a file.
+Download acceleration, also known as multipart download, is a term for the method employed by software such as download managers to download a single file by splitting it in segments and using several simultaneous connections to download these segments from a single server.
+The reason for doing so is to circumvent server side limitations of bandwidth per connection. Because in normal networking situations all individual connections are treated equally, rather than actual file transfers, multiple connections yields an advantage on saturated links over simple connections, both in terms of total bandwidth allocation and resilience. Many servers, however, implement a maximum number of simultaneous connections per client in order to mitigate this.
+All the files are saved in default download directory.
+The Client program MUST allow user to download more than one file at a time and may be from multiple servers as well. This will be a scenario where your program has to handle concurrency with multiple TCP servers as well as concurrent connections with a given server.
+User MAY limit maximum number of files the program can handle.
+Design user interface such that program takes file name to download, like wise interface to input multiple filenames.
+The program MUST display download status of all the downloading files. All the files are labeled differently in the download directory while download in progress, after the download is complete each of these files are renamed to filenames required by the user.
+User/Program limits number of files to download and number of connections required to download a file from one server.
+It is possible for the program to know the file size,before starting the download process. This way your program create an empty file inside download directory and pad it with junk/zero values until it reaches required file size.
+You way want to write this feature in server such that along with file name, file size is sent by the server.
+This exercise will help your program block/save disk space, such that even if disk runs out of space your downloading program will not have to stop. Therefore, your program MUST ensure space availability.
+When downloading a file, your program handles multiple connections for downloading a file. When the download is complete, user MUST be displayed status about download complete.
+You may want to create status numbers in server denoting end of transfer, file not found, internal error etc.
+Take extreme care in handling socket interface & file handlers.
+Developers MAY choose to write data structures, helper functions, use concepts like threads, fork etc
+You MAY implement client program using hybrid for concurrency, like fork for hand multiple files while threads for handling concurrency with-in a file download.
+You MAY have constants declared corresponding popular responses such that client can make proper display of its meanings.
+When writing onto a file, developers MUST ask questions like - can I use two or more file descriptors to operate on same file? If developers wants to stripe the downloadable file into separate segments and handle them using separate file descriptions it is design decision.
+Client program must handle connection closing carefully
+Each connection established with a server must be closed when its objectives are met.
+Hints: Handle offsets for file download based on number of connections and file size. Server program must be written to handle client requests for downloading from specific offset location. 
+Resources:
+http://en.wikipedia.org/wiki/Download_manager
+
+Deadline: Friday 12PM (Week 4) 
+Deliverables: Submit all project code, screen shots of usage, along with report of the journey in a .zip folder. Do not submit .exe files. Submit learningcenter_teamno_rollnumber_downloadmanager.zip 
+Evaluation Criteria: This module is evaluated for 100 marks, following is the breakup:
+TCP Iterative server - 30 marks
+Server recognizes client requests through constants like numbers denoting requests for file names, request for download, request for closing etc.
+Server communicating file-names, sizes for accepted connections.
+Server handling files
+Downloading a file - 25 marks
+Multiple connections
+Temporary files in default directory.
+File handling in client machine
+Downloading multiple files, could be from multiple servers - 25 marks
+Verifying downloaded file, renaming file based on user required file name, clubbing segments (if applicable), file handling - 10 marks
+Client server requests and responses handling - 10 marks.
