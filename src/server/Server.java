@@ -71,7 +71,8 @@ class NewThread extends Thread
 				int fileSize = (int) f.length();
 
 
-				FileInputStream fis =  new FileInputStream(f);								//calculating md5 check sum
+				//calculating md5 check sum
+				FileInputStream fis =  new FileInputStream(f);			
 				byte[] buffer = new byte[1024];
 				MessageDigest complete = MessageDigest.getInstance("MD5");
 				int numRead;
@@ -90,13 +91,12 @@ class NewThread extends Thread
 
 				for (int i=0; i < b.length; i++) 
 					result += Integer.toString((b[i] & 0xff) + 0x100, 16).substring(1);
-				
+
 				out.writeUTF(result);
 				out.flush();
 			}
 			else
 			{
-				//				System.out.println("Accepting Server sockets");
 				SocketChannel toChannel = server.getChannel();
 
 				long fromoff = Long.parseLong(s_split[1]);
@@ -105,8 +105,6 @@ class NewThread extends Thread
 				RandomAccessFile fromFile = new RandomAccessFile(f.getAbsolutePath(), "rw");
 				FileChannel fromChannel = fromFile.getChannel();
 
-				//				System.out.println("From Channel is open: "+fromChannel.isOpen());
-
 				long position = fromoff;
 				long count = tooff - fromoff + 1;
 
@@ -114,8 +112,6 @@ class NewThread extends Thread
 
 			}
 
-			//			in.close();
-			//			out.close();
 		}
 		catch (SocketTimeoutException s)
 		{

@@ -10,14 +10,17 @@ import java.awt.event.ContainerAdapter;
 import java.awt.event.ContainerEvent;
 
 
+/**
+ * For displaying download progress
+ */
 public class DownloadProgress  {
 
 
-	private static JFrame frmDownloadProgress;
+	private static JFrame frameDownloadProgress;
 
 	private static JProgressBar progressBar;
 
-	private static JButton btnClose;
+	private static JButton buttonClose;
 	private static JLabel building;
 
 
@@ -27,7 +30,7 @@ public class DownloadProgress  {
 	 */
 	public DownloadProgress(String file, int progress) {
 		initialize(file, progress);
-		frmDownloadProgress.setVisible(true);
+		frameDownloadProgress.setVisible(true);
 	}
 
 
@@ -38,65 +41,68 @@ public class DownloadProgress  {
 	 */
 	public void initialize(String file, int progress)
 	{
-		frmDownloadProgress = new JFrame();
-		frmDownloadProgress.getContentPane().addContainerListener(new ContainerAdapter() {
+		frameDownloadProgress = new JFrame();
+		frameDownloadProgress.getContentPane().addContainerListener(new ContainerAdapter() {
 			@Override
 			public void componentAdded(ContainerEvent e) {
 
 			}
 		});
-		frmDownloadProgress.setVisible(true);
+		frameDownloadProgress.setVisible(true);
 
-		frmDownloadProgress.setTitle("Download Progress");
-		frmDownloadProgress.setBounds(100, 100, 366, 206);
-		frmDownloadProgress.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frmDownloadProgress.getContentPane().setLayout(null);
+		frameDownloadProgress.setTitle("Download Progress");
+		frameDownloadProgress.setBounds(100, 100, 366, 206);
+		frameDownloadProgress.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frameDownloadProgress.getContentPane().setLayout(null);
 
 		JLabel lblFile = new JLabel("File:");
 		lblFile.setBounds(38, 24, 70, 15);
-		frmDownloadProgress.getContentPane().add(lblFile);
+		frameDownloadProgress.getContentPane().add(lblFile);
 
 		JLabel fileName = new JLabel(file);
 		fileName.setBounds(91, 24, 220, 15);
-		frmDownloadProgress.getContentPane().add(fileName);
+		frameDownloadProgress.getContentPane().add(fileName);
 
 		progressBar  = new JProgressBar();
 		progressBar.setForeground(new Color(34, 139, 34));
 		progressBar.setBounds(29, 51, 303, 31);
-		frmDownloadProgress.getContentPane().add(progressBar);
+		frameDownloadProgress.getContentPane().add(progressBar);
 		progressBar.setValue(progress);
 
-		btnClose = new JButton("Close");
-		btnClose.addActionListener(new ActionListener() {
+		buttonClose = new JButton("Close");
+		buttonClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frmDownloadProgress.dispose();
+				frameDownloadProgress.dispose();
 			}
 		});
-		btnClose.setEnabled(false);
-		btnClose.setBounds(91, 139, 117, 25);
-		frmDownloadProgress.getContentPane().add(btnClose);
+		buttonClose.setEnabled(false);
+		buttonClose.setBounds(91, 139, 117, 25);
+		frameDownloadProgress.getContentPane().add(buttonClose);
 
 		building = new JLabel("");
 		building.setForeground(new Color(128, 0, 0));
 		building.setBounds(29, 105, 303, 22);
-		frmDownloadProgress.getContentPane().add(building);
-		frmDownloadProgress.revalidate();
+		frameDownloadProgress.getContentPane().add(building);
+		frameDownloadProgress.revalidate();
 	}
 
+	/**
+	 * Set the progress
+	 * @param progress
+	 */
 	public  void setProgress(double progress)
 	{
 		System.out.println("Download progress: " + progress);
 		progressBar.setValue((int)progress);
 	}
 
-	public static void setCheck(boolean check)
-	{
-
-	}
-
+	/**
+	 * Check the file for integrity and close
+	 * @param check
+	 */
 	public static void close(boolean check)
 	{
-		btnClose.setEnabled(true);
+		buttonClose.setEnabled(true);
 		
 		if(check)
 			building.setText("Checking downloaded file....OK");
@@ -111,6 +117,6 @@ public class DownloadProgress  {
 
 	public static void destroy()
 	{
-		frmDownloadProgress.dispose();
+		frameDownloadProgress.dispose();
 	}
 }

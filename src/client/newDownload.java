@@ -27,6 +27,8 @@ import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
 
+import client.Client;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.FocusAdapter;
@@ -93,7 +95,7 @@ public class newDownload
 		frmNewDownload.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmNewDownload.getContentPane().setLayout(null);
 
-		lblFilesList = new JLabel("FIles List");
+		lblFilesList = new JLabel("Files List");
 		lblFilesList.setBounds(12, 116, 70, 15);
 		frmNewDownload.getContentPane().add(lblFilesList);
 
@@ -283,10 +285,17 @@ public class newDownload
 		});
 	}
 
+	/**
+	 * @param serverAddress
+	 * @param serverPort
+	 * @param file
+	 * @return
+	 */
 	private int getSize(String serverAddress, int serverPort, String file)
 	{
 		try 
 		{
+			//Establish connection with Server
 			Socket client = new Socket(serverAddress, serverPort);
 			DataInputStream in = new DataInputStream(client.getInputStream());
 			DataOutputStream out = new DataOutputStream(client.getOutputStream());
@@ -294,15 +303,13 @@ public class newDownload
 			//send request to server for selected file
 			out.writeUTF(file + "#-1#-1");
 
-			//Read filesize from server
-//			int filesize = in.readInt();	//filesize set
-			
+			//Read filesize, checksum from server
+			//Response will be sent as filesize#checksum
 			String s = in.readUTF();
-			
+			//split based on delimiter #
 			String s_split [] = s.split("#");
 			
 			int filesize = Integer.parseInt(s_split[0]);
-			
 			md5sum = s_split[1];
 
 			client.close(); 
